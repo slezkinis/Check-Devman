@@ -2,12 +2,17 @@ import telegram
 import requests
 from pprint import pprint
 import logging
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 url = 'https://dvmn.org/api/long_polling/'
 headers = {'Authorization': 'Token 86367ca65496339f9cf298d0532010662722e987'}
 timestamp = ''
-bot = telegram.Bot(token='5538356450:AAFqsdjOTlkP5pug7BAfYDNGfvbN6XAl4ww')
+TOKEN = os.environ['TG_TOKEN']
+CHAT_ID = os.environ['TG_CHAT_ID']
+bot = telegram.Bot(token=TOKEN)
 while True:
     try:
         if timestamp:
@@ -23,8 +28,8 @@ while True:
                 result = 'К сожалению, в работе нашлись ошибки:('
             else:
                 result = 'Преподавателю всё понравилось!'
-            text = f'У вас проверили работу "{response.json()["new_attempts"][0]["lesson_title"]}"!\n{result}\n Ссылка: {response.json()["new_attempts"][0]["lesson_url"]}'
-            bot.send_message(text=text, chat_id=1509726530)            
+            text = f'У вас проверили работу "{response.json()["new_attempts"][0]["lesson_title"]}"!\n{result}\nСсылка: {response.json()["new_attempts"][0]["lesson_url"]}'
+            bot.send_message(text=text, chat_id=CHAT_ID)            
     except requests.exceptions.ReadTimeout:
         logging.warning('Превышено время ожидания! Делаю повторный запрос')
     except requests.exceptions.ConnectionError:
