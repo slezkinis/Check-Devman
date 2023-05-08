@@ -8,7 +8,7 @@ load_dotenv()
 
 
 url = 'https://dvmn.org/api/long_polling/'
-headers = {'Authorization': 'Token 86367ca65496339f9cf298d0532010662722e987'}
+headers = {'Authorization': f'Token {os.environ["DVMN_TOKEN"]}'}
 timestamp = ''
 TOKEN = os.environ['TG_TOKEN']
 CHAT_ID = os.environ['TG_CHAT_ID']
