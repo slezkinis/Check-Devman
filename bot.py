@@ -10,6 +10,7 @@ def main():
     url = 'https://dvmn.org/api/long_polling/'
     headers = {'Authorization': f'Token {os.environ["DVMN_TOKEN"]}'}
     timestamp = ''
+    params = dict()
     tg_token = os.environ['TG_TOKEN']
     chat_id = os.environ['TG_CHAT_ID']
     bot = telegram.Bot(token=tg_token)
@@ -17,10 +18,8 @@ def main():
         try:
             if timestamp:
                 params = {'timestamp': timestamp}
-                response = requests.get(url, headers=headers, params=params)
                 timestamp = ''
-            else:
-                response = requests.get(url, headers=headers)
+            response = requests.get(url, headers=headers, params=params)
             if response.json()['status'] == 'timeout':
                 timestamp = response.json()['timestamp_to_request']
             else:
