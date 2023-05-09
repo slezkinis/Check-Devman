@@ -21,15 +21,15 @@ def main():
                 params = {'timestamp': timestamp}
                 timestamp = ''
             response = requests.get(url, headers=headers, params=params)
-            server_answe = response.json()
-            if server_answe['status'] == 'timeout':
-                timestamp = server_answe['timestamp_to_request']
+            server_answer = response.json()
+            if server_answer['status'] == 'timeout':
+                timestamp = server_answer['timestamp_to_request']
             else:
-                if server_answe['new_attempts'][0]['is_negative']:
+                if server_answer['new_attempts'][0]['is_negative']:
                     result = 'К сожалению, в работе нашлись ошибки:('
                 else:
                     result = 'Преподавателю всё понравилось!'
-                text = f'У вас проверили работу "{server_answe["new_attempts"][0]["lesson_title"]}"!\n{result}\nСсылка: {server_answe["new_attempts"][0]["lesson_url"]}'
+                text = f'У вас проверили работу "{server_answer["new_attempts"][0]["lesson_title"]}"!\n{result}\nСсылка: {server_answer["new_attempts"][0]["lesson_url"]}'
                 bot.send_message(text=text, chat_id=chat_id)            
         except requests.exceptions.ReadTimeout:
             logging.warning('Превышено время ожидания! Делаю повторный запрос')
