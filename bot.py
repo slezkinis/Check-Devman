@@ -25,11 +25,12 @@ def main():
             if server_answer['status'] == 'timeout':
                 timestamp = server_answer['timestamp_to_request']
             else:
-                if server_answer['new_attempts'][0]['is_negative']:
+                checking_result = server_answer['new_attempts'][0]
+                if checking_result['is_negative']:
                     result = 'К сожалению, в работе нашлись ошибки:('
                 else:
                     result = 'Преподавателю всё понравилось!'
-                text = f'У вас проверили работу "{server_answer["new_attempts"][0]["lesson_title"]}"!\n{result}\nСсылка: {server_answer["new_attempts"][0]["lesson_url"]}'
+                text = f'У вас проверили работу "{checking_result["lesson_title"]}"!\n{result}\nСсылка: {checking_result["lesson_url"]}'
                 bot.send_message(text=text, chat_id=chat_id)            
         except requests.exceptions.ReadTimeout:
             logging.warning('Превышено время ожидания! Делаю повторный запрос')
