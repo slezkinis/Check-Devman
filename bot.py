@@ -10,9 +10,9 @@ def main():
     url = 'https://dvmn.org/api/long_polling/'
     headers = {'Authorization': f'Token {os.environ["DVMN_TOKEN"]}'}
     timestamp = ''
-    TOKEN = os.environ['TG_TOKEN']
-    CHAT_ID = os.environ['TG_CHAT_ID']
-    bot = telegram.Bot(token=TOKEN)
+    tg_token = os.environ['TG_TOKEN']
+    chat_id = os.environ['TG_CHAT_ID']
+    bot = telegram.Bot(token=tg_token)
     while True:
         try:
             if timestamp:
@@ -29,7 +29,7 @@ def main():
                 else:
                     result = 'Преподавателю всё понравилось!'
                 text = f'У вас проверили работу "{response.json()["new_attempts"][0]["lesson_title"]}"!\n{result}\nСсылка: {response.json()["new_attempts"][0]["lesson_url"]}'
-                bot.send_message(text=text, chat_id=CHAT_ID)            
+                bot.send_message(text=text, chat_id=chat_id)            
         except requests.exceptions.ReadTimeout:
             logging.warning('Превышено время ожидания! Делаю повторный запрос')
         except requests.exceptions.ConnectionError:
