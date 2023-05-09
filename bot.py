@@ -1,8 +1,9 @@
 import telegram
 import requests
-from pprint import pprint
 import logging
 import os
+from time import sleep
+
 from dotenv import load_dotenv
 
 
@@ -34,6 +35,7 @@ def main():
             logging.warning('Превышено время ожидания! Делаю повторный запрос')
         except requests.exceptions.ConnectionError:
             logging.error('Нет подключения к сети!')
+            sleep(5)
 
 
 if __name__ == '__main__':
