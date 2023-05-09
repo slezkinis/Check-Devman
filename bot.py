@@ -36,7 +36,7 @@ def main():
             logging.warning('Превышено время ожидания! Делаю повторный запрос')
         except requests.exceptions.ConnectionError:
             logging.error('Нет подключения к сети!')
-            sleep(5)
+            sleep(6)
 
 
 if __name__ == '__main__':
