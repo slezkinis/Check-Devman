@@ -20,11 +20,11 @@ def main():
             if timestamp:
                 params = {'timestamp': timestamp}
             response = requests.get(url, headers=headers, params=params)
-            server_answer = response.json()
-            if server_answer['status'] == 'timeout':
-                timestamp = server_answer['timestamp_to_request']
+            dvmn_answer = response.json()
+            if dvmn_answer['status'] == 'timeout':
+                timestamp = dvmn_answer['timestamp_to_request']
             else:
-                checking_result = server_answer['new_attempts'][0]
+                checking_result = dvmn_answer['new_attempts'][0]
                 if checking_result['is_negative']:
                     result = 'К сожалению, в работе нашлись ошибки:('
                 else:
