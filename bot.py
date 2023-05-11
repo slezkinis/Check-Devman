@@ -19,7 +19,6 @@ def main():
         try:
             if timestamp:
                 params = {'timestamp': timestamp}
-                timestamp = ''
             response = requests.get(url, headers=headers, params=params)
             server_answer = response.json()
             if server_answer['status'] == 'timeout':
